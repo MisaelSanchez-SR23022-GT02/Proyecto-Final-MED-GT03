@@ -30,7 +30,7 @@ Dado un árbol B+ de orden `m`:
 | Propiedad | Descripción |
 |-----------|-------------|
 | **Capacidad máx. de hijos** | Cada nodo interno puede tener como máximo `m` hijos |
-| **Capacidad máx. de claves** | Cada nodo puede tener como máximo `m − 1` claves |
+| **Capacidad máx. de claves** | Cada nodo puede tener como máximo `m - 1` claves |
 | **Ocupación mínima** | Cada nodo interno (excepto la raíz) debe tener al menos `⌈m/2⌉` hijos, garantizando que ningún nodo esté demasiado vacío |
 | **Ordenamiento** | Dentro de un nodo las claves se ordenan: `k₁ < k₂ < … < kₙ` |
 | **Balanceo perfecto** | Todas las hojas se encuentran exactamente en el mismo nivel. El árbol crece hacia **arriba** (desde las hojas hacia la raíz), no hacia abajo |
@@ -45,9 +45,9 @@ Trabajamos con un árbol B+ de `t = 2`, lo que equivale a un orden `m = 4` (rela
 
 | Parámetro | Valor |
 |-----------|-------|
-| Máximo de claves por nodo | `m − 1 = 3` |
+| Máximo de claves por nodo | `m - 1 = 3` |
 | Máximo de hijos por nodo interno | `m = 4` |
-| Mínimo de claves (nodos internos) | `⌈m/2⌉ − 1 = 1` |
+| Mínimo de claves (nodos internos) | `⌈m/2⌉ - 1 = 1` |
 | Mínimo de hijos (nodos internos) | `⌈m/2⌉ = 2` |
 
 > **Claves utilizadas:** rutas de directorios Unix (`/bin`, `/etc`, `/home`…), ordenadas **alfabéticamente**, para simular cómo un sistema de archivos real podría indexar sus directorios.
@@ -67,7 +67,7 @@ Esto garantiza que el árbol siempre esté balanceado.
 
 ---
 
-### Paso 1 — Insertar `/home`, `/etc`, `/var`
+### Paso 1 - Insertar `/home`, `/etc`, `/var`
 
 El árbol está vacío, por lo que el primer nodo que se crea es una hoja raíz. Los directorios se insertan ordenadamente alfabéticamente:
 
@@ -80,7 +80,7 @@ El árbol está vacío, por lo que el primer nodo que se crea es una hoja raíz.
 
 ---
 
-### Paso 2 — Insertar `/usr`
+### Paso 2 - Insertar `/usr`
 
 Como `/usr < /var` (alfabéticamente), se inserta antes de `/var`. La hoja pasa a tener 4 claves, lo que **excede el máximo permitido (3)**. Esto provoca un desborde y se debe dividir la hoja.
 
@@ -102,7 +102,7 @@ Como `/usr < /var` (alfabéticamente), se inserta antes de `/var`. La hoja pasa 
 
 ---
 
-### Paso 3 — Insertar `/bin`
+### Paso 3 - Insertar `/bin`
 
 Como `/bin < /usr`, se baja por la izquierda hacia la hoja `[/etc, /home]`. Se inserta ordenadamente: `[/bin, /etc, /home]`.
 
@@ -115,9 +115,9 @@ Como `/bin < /usr`, se baja por la izquierda hacia la hoja `[/etc, /home]`. Se i
 
 ---
 
-### Paso 4 — Insertar `/tmp`
+### Paso 4 - Insertar `/tmp`
 
-Como `/tmp < /usr`, se va a la hoja izquierda `[/bin, /etc, /home]`. Al insertar `/tmp` (después de `/home`) se obtiene `[/bin, /etc, /home, /tmp]` → **4 claves, desborde**.
+Como `/tmp < /usr`, se va a la hoja izquierda `[/bin, /etc, /home]`. Al insertar `/tmp` (después de `/home`) se obtiene `[/bin, /etc, /home, /tmp]` -> **4 claves, desborde**.
 
 <p align="center">
   <img src="./ArbolBPlus/imagen5.png" width="600">
@@ -131,7 +131,7 @@ Como `/tmp < /usr`, se va a la hoja izquierda `[/bin, /etc, /home]`. Al insertar
 3. Se promociona `/home` (primera clave de la derecha) al padre.
 
 **Padre antes:** `[/usr]` (1 clave, 2 hijos)
-**Padre después:** inserta `/home` → `[/home, /usr]` (2 claves, 3 hijos). Como el máximo en nodos internos también es 3, aún está dentro de rango.
+**Padre después:** inserta `/home` -> `[/home, /usr]` (2 claves, 3 hijos). Como el máximo en nodos internos también es 3, aún está dentro de rango.
 
 Los hijos quedan ordenados: primero los menores que `/home`, luego entre `/home` y `/usr`, luego mayores que `/usr`. Las hojas se enlazan consecutivamente.
 
@@ -143,11 +143,11 @@ Los hijos quedan ordenados: primero los menores que `/home`, luego entre `/home`
 
 ---
 
-### Paso 5 — Insertar `/opt`
+### Paso 5 - Insertar `/opt`
 
 Se compara con la raíz: `/opt` está entre `/home` y `/usr`, por lo que se va al hijo del medio: la hoja `[/home, /tmp]`. Se inserta ordenadamente: `[/home, /opt, /tmp]`.
 
-- 3 claves → **no hay desborde**.
+- 3 claves -> **no hay desborde**.
 
 <p align="center">
   <img src="./ArbolBPlus/imagen7.png" width="600">
@@ -155,9 +155,9 @@ Se compara con la raíz: `/opt` está entre `/home` y `/usr`, por lo que se va a
 
 ---
 
-### Paso 6 — Insertar `/lib`
+### Paso 6 - Insertar `/lib`
 
-Como `/lib` también está entre `/home` y `/usr`, se va a la hoja `[/home, /opt, /tmp]`. Al insertar: `[/home, /lib, /opt, /tmp]` → **4 claves, desborde**.
+Como `/lib` también está entre `/home` y `/usr`, se va a la hoja `[/home, /opt, /tmp]`. Al insertar: `[/home, /lib, /opt, /tmp]` -> **4 claves, desborde**.
 
 **División de hoja:**
 
@@ -189,8 +189,8 @@ Para encontrar un dato, el árbol siempre empieza desde arriba y toma decisiones
 
 **2. En la Hoja `[/home, /lib]`:**
 - El sistema lee este nodo desde disco o memoria.
-- `/home` → No es, se descarta.
-- `/lib` → **Encontrado.**
+- `/home` -> No es, se descarta.
+- `/lib` -> **Encontrado.**
 
 <p align="center">
   <img src="./ArbolBPlus/imagen9.png" width="600">
@@ -208,8 +208,8 @@ Para encontrar un dato, el árbol siempre empieza desde arriba y toma decisiones
 
 **2. En la Hoja `[/home, /lib]`:**
 - Se lee el nodo completo.
-- `/home` → No es, se descarta.
-- `/lib` → No es, se descarta.
+- `/home` -> No es, se descarta.
+- `/lib` -> No es, se descarta.
 - No hay más claves en este nodo y no existe un siguiente nodo donde pueda estar (la siguiente hoja empieza en `/opt`, que ya es mayor que `/proc`).
 - **`/proc` NO encontrado.**
 
@@ -256,8 +256,8 @@ Se busca `/usr`: va por la derecha, llega a la hoja `[/usr, /var]`. Se elimina `
 
 Sin embargo, la hoja cambió su primera clave: antes era `/usr`, ahora es `/var`. Esto **invalida el separador** `/usr` en el padre. Se debe actualizar el separador en el nodo interno para que refleje correctamente la primera clave de esa hoja.
 
-- **Antes:** `[/home, /opt, /usr]` con hijos `→ [/usr, /var]`
-- **Después:** `[/home, /opt, /var]` con hijos `→ [/var]`
+- **Antes:** `[/home, /opt, /usr]` con hijos `-> [/usr, /var]`
+- **Después:** `[/home, /opt, /var]` con hijos `-> [/var]`
 
 > La clave `/usr` desaparece completamente del árbol. El separador en el padre ahora es `/var`, que es la primera clave real de ese subárbol.
 
@@ -273,7 +273,7 @@ Sin embargo, la hoja cambió su primera clave: antes era `/usr`, ahora es `/var`
 
 Se actualiza el separador correspondiente en el padre: el separador `/opt` (entre los hijos `[/home, /lib]` y `[/opt, /tmp]`) ahora debe ser `/tmp`, porque `/tmp` es la nueva primera clave de esa hoja.
 
-- **Raíz cambia de:** `[/home, /opt, /var]` → `[/home, /tmp, /var]`
+- **Raíz cambia de:** `[/home, /opt, /var]` -> `[/home, /tmp, /var]`
 
 <p align="center">
   <img src="./ArbolBPlus/imagen12.png" width="600">
@@ -284,19 +284,19 @@ Se actualiza el separador correspondiente en el padre: el separador `/opt` (entr
 
 ### Eliminar `/var`
 
-`/var` está en la hoja `[/var]` (la de más a la derecha). Al borrar, la hoja queda **vacía → subdesborde**.
+`/var` está en la hoja `[/var]` (la de más a la derecha). Al borrar, la hoja queda **vacía -> subdesborde**.
 
-**Paso 1 — Préstamo:**
+**Paso 1 - Préstamo:**
 - Se mira a la hermana izquierda: la hoja `[/tmp]`. Tiene solo **1 clave** (`/tmp`), que es el mínimo. No puede prestar sin quedar ella misma por debajo del mínimo.
 - No existe hermana derecha.
 - **No se puede pedir prestado.**
 
-**Paso 2 — Fusión:**
+**Paso 2 - Fusión:**
 - Se fusiona la hoja vacía con su hermana izquierda `[/tmp]`.
 - Al unir los contenidos (`[/tmp]` + vacía), el resultado es una única hoja con `[/tmp]`.
 - La hoja vacía se elimina físicamente del árbol y los punteros se reasignan.
 
-**Paso 3 — Ajuste en el padre:**
+**Paso 3 - Ajuste en el padre:**
 - El padre `[/home, /tmp, /var]` tenía un separador `/var` entre los hijos correspondientes a las hojas `[/tmp]` y `[/var]`. Al fusionarse, ese separador deja de ser necesario y se elimina junto con el puntero al hijo derecho.
 - El padre pasa de **3 claves y 4 hijos** a **2 claves y 3 hijos**: `[/home, /tmp]`.
 
@@ -309,17 +309,17 @@ Se actualiza el separador correspondiente en el padre: el separador `/opt` (entr
 
 ### Eliminar `/tmp`
 
-Se busca `/tmp` en la última hoja. Al eliminarlo, la hoja queda **vacía → subdesborde**.
+Se busca `/tmp` en la última hoja. Al eliminarlo, la hoja queda **vacía -> subdesborde**.
 
-**Paso 1 — Préstamo:**
+**Paso 1 - Préstamo:**
 - Se mira a la hermana izquierda `[/home, /lib]`. Tiene **2 claves**; si presta una se quedaría en el mínimo (1), lo cual sigue siendo válido.
 - En esta implementación se aplica la política de **fusionar siempre que sea posible**, priorizando la compactación del árbol sobre el préstamo.
 
-**Paso 2 — Fusión:**
+**Paso 2 - Fusión:**
 - Se fusiona la hoja vacía con su hermana izquierda `[/home, /lib]`.
 - El resultado es la hoja `[/home, /lib]`.
 
-**Paso 3 — Ajuste en el padre:**
+**Paso 3 - Ajuste en el padre:**
 - El separador `/tmp` en la raíz ya no apunta a nada, por lo que se elimina.
 - La raíz pasa de **2 claves** a **1 clave**: `[/home]`.
 
@@ -333,7 +333,7 @@ Se busca `/tmp` en la última hoja. Al eliminarlo, la hoja queda **vacía → su
 
 Se busca `/lib` en la hoja `[/home, /lib]`. Al eliminarlo, la hoja queda con **1 sola clave: `[/home]`**.
 
-- Todavía tiene el mínimo (1 clave) → **no hay subdesborde**.
+- Todavía tiene el mínimo (1 clave) -> **no hay subdesborde**.
 - El árbol se mantiene con la raíz `[/home]` y dos hojas: `[/bin, /etc]` y `[/home]`.
 
 <p align="center">
@@ -344,18 +344,18 @@ Se busca `/lib` en la hoja `[/home, /lib]`. Al eliminarlo, la hoja queda con **1
 
 ### Eliminar `/home`
 
-Se elimina `/home` de la hoja `[/home]`. La hoja queda **vacía → subdesborde**.
+Se elimina `/home` de la hoja `[/home]`. La hoja queda **vacía -> subdesborde**.
 
-**Paso 1 — Préstamo:**
-- Se mira a la hermana izquierda `[/bin, /etc]`. Tiene **2 claves**, más que el mínimo → **se puede pedir prestado**.
+**Paso 1 - Préstamo:**
+- Se mira a la hermana izquierda `[/bin, /etc]`. Tiene **2 claves**, más que el mínimo -> **se puede pedir prestado**.
 
-**Paso 2 — Movimiento:**
+**Paso 2 - Movimiento:**
 - Se mueve la **última clave del hermano izquierdo** (`/etc`) a la hoja vacía.
 - La hoja izquierda queda como `[/bin]` y la hoja que estaba vacía ahora tiene `[/etc]`.
 
-**Paso 3 — Actualizar el padre:**
+**Paso 3 - Actualizar el padre:**
 - Como la hoja de la derecha ahora empieza con `/etc`, se actualiza el separador en la raíz.
-- **Raíz cambia de:** `[/home]` → `[/etc]`
+- **Raíz cambia de:** `[/home]` -> `[/etc]`
 
 
 <p align="center">
@@ -366,16 +366,16 @@ Se elimina `/home` de la hoja `[/home]`. La hoja queda **vacía → subdesborde*
 
 ### Eliminar `/etc`
 
-Se elimina `/etc` de su hoja. La hoja queda **vacía → subdesborde**.
+Se elimina `/etc` de su hoja. La hoja queda **vacía -> subdesborde**.
 
-**Paso 1 — Préstamo:**
-- El hermano izquierdo `[/bin]` solo tiene **1 clave** → no puede prestar.
+**Paso 1 - Préstamo:**
+- El hermano izquierdo `[/bin]` solo tiene **1 clave** -> no puede prestar.
 
-**Paso 2 — Fusión:**
+**Paso 2 - Fusión:**
 - Se fusiona la hoja vacía con `[/bin]`.
 - La hoja resultante es `[/bin]`.
 
-**Paso 3 — Colapso de Raíz:**
+**Paso 3 - Colapso de Raíz:**
 - En el padre, se elimina el separador `/etc`. La raíz se queda **sin claves**.
 - Como una raíz interna no puede estar vacía si hay datos, el árbol **reduce su altura**.
 - El único hijo `[/bin]` sube y se convierte en la **nueva hoja raíz**.
@@ -390,8 +390,8 @@ Se elimina `/etc` de su hoja. La hoja queda **vacía → subdesborde**.
 
 Dos variables aparecen en todo el análisis:
 
-- **n** → número de claves almacenadas en el árbol
-- **h** → altura del árbol, que siempre es **O(log n)** gracias al balanceo automático
+- **n** -> número de claves almacenadas en el árbol
+- **h** -> altura del árbol, que siempre es **O(log n)** gracias al balanceo automático
 
 La altura es el factor clave porque todas las operaciones empiezan en la raíz y bajan nivel por nivel. En cada nodo se hace una búsqueda lineal entre las claves del nodo, pero como el máximo de claves por nodo es 3 (una constante fija en `t = 2`), esa búsqueda cuesta O(1). Lo que escala con `n` es únicamente la cantidad de niveles que se recorren.
 
@@ -435,7 +435,7 @@ Mostrar todas las claves en orden aprovecha la lista enlazada de hojas: primero 
 
 | Operación | Complejidad | Por qué |
 |-----------|:-----------:|---------|
-| Búsqueda | O(log n) | Se recorre un camino raíz → hoja de h niveles |
+| Búsqueda | O(log n) | Se recorre un camino raíz -> hoja de h niveles |
 | Inserción | O(log n) | Bajada + divisiones en cascada, máximo h niveles |
 | Eliminación | O(log n) | Bajada + fusiones/préstamos en cascada, máximo h niveles |
 | Recorrido en orden | O(n) | Hay que visitar las n claves en las hojas |
