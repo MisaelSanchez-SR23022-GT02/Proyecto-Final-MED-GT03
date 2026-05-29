@@ -1,4 +1,4 @@
-# Planificador de Procesos con Colas Multinivel
+# Planificador de Procesos con Colas Multinivel 
 
 Simulación de tres algoritmos de planificación de CPU: **Round Robin**, **Prioridades Apropiativo** y **MLFQ**. Se comparan sus métricas de rendimiento sobre un mismo caso de prueba y se analiza la complejidad de cada implementación.
 
@@ -27,13 +27,13 @@ Cada proceso se representa con los siguientes atributos:
 - **Prioridad** (solo para el algoritmo de prioridades).
 
 <p align="center">
-  <img src="./image1.png" width="600">
+  <img src="./ColasMultinivel/image1.png" width="600">
 </p>
 
 El flujo de estados de un proceso (nuevo -> listo -> corriendo -> terminado) se muestra en el siguiente diagrama:
 
 <p align="center">
-  <img src="./image2.png" width="600">
+  <img src="./ColasMultinivel/image2.png" width="600">
 </p>
 
 Las tres métricas que se calculan para cada proceso son:
@@ -53,7 +53,7 @@ Las tres métricas que se calculan para cada proceso son:
 Cola circular FIFO con quantum fijo. Si un proceso no termina en su quantum, regresa al final de la cola. Sin riesgo de inanición.
 
 <p align="center">
-  <img src="./image3.png" width="600">
+  <img src="./ColasMultinivel/image3.png" width="600">
 </p>
 
 ### Prioridades Apropiativo
@@ -61,7 +61,7 @@ Cola circular FIFO con quantum fijo. Si un proceso no termina en su quantum, reg
 Cola ordenada por prioridad (número más bajo = mayor prioridad). Si llega un proceso con mayor prioridad que el que está corriendo, lo expulsa inmediatamente. Riesgo de inanición para procesos de baja prioridad (se resuelve con envejecimiento).
 
 <p align="center">
-  <img src="./image4.png" width="600">
+  <img src="./ColasMultinivel/image4.png" width="600">
 </p>
 
 ### Multinivel Retroalimentado (MLFQ)
@@ -82,7 +82,7 @@ Reglas de funcionamiento:
 5. Cada 10 unidades de tiempo (boost), todos suben a Cola 0.
 
 <p align="center">
-  <img src="./image5.png" width="600">
+  <img src="./ColasMultinivel/image5.png" width="600">
 </p>
 
 El archivo `PlanificadorDeProcesosConColasMultinivel.psc` contiene la implementación en pseudocódigo estructurado:
